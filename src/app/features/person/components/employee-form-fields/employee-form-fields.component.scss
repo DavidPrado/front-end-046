@@ -1,0 +1,128 @@
+// Container principal que criamos no HTML <div class="employee-fields-container row">
+.employee-fields-container {
+  padding: 16px 0; // Respiro vertical entre os campos e o título
+  display: flex;
+  flex-wrap: wrap; // Permite quebrar linha em telas pequenas
+  gap: 20px; // Espaçamento entre os campos, idêntico ao padrão dos seus outros formulários
+}
+
+.btn-remove-vincule {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+// Estilização profunda nos componentes do Angular Material
+::ng-deep {
+  .mat-form-field-appearance-outline {
+    width: 100%; // Garante que ocupe a largura total do grid
+
+    // Estilo da Borda e do Fundo do Input
+    .mat-form-field-wrapper {
+      padding-bottom: 0; // Remove espaço extra padrão abaixo do input
+
+      .mat-form-field-flex {
+        background-color: #fafafa; // Fundo leve para o input não parecer vazio
+        border-radius: 8px !important; // Cantos arredondados profissionais, igual aos seus cards de vínculo
+        transition: all 0.2s ease;
+        padding-top: 10px; // Alinhamento interno
+
+        &:hover {
+          background-color: #f5f5f5; // Efeito sutil ao passar o mouse
+        }
+      }
+
+      // Estilo da borda padrão
+      .mat-form-field-outline {
+        border-color: #e0e0e0; // Cinza claro profissional, combinando com o divider
+        color: #e0e0e0;
+        top: 0; // Corrige alinhamento do label
+
+        .mat-form-field-outline-thick {
+          border-width: 1px; // Mantém a borda fina
+        }
+      }
+    }
+
+    // Estado Focado (quando o usuário clica)
+    &.mat-focused {
+      .mat-form-field-flex {
+        background-color: #fff; // Fundo branco puro ao focar
+        box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.15); // Efeito de brilho azul sutil, combinando com o botão
+      }
+
+      .mat-form-field-outline {
+        border-color: #3f51b5 !important; // Borda azul Material/Etec
+        color: #3f51b5;
+      }
+
+      .mat-form-field-label {
+        color: #3f51b5 !important; // Cor do Label focado
+      }
+    }
+
+    // Estado de Erro (Borda Vermelha)
+    &.mat-form-field-invalid {
+      .mat-form-field-outline {
+        border-color: #f44336 !important; // Vermelho padrão de erro
+        color: #f44336;
+      }
+    }
+
+    // Estilo do Label (Título do campo) e Placeholder
+    .mat-form-field-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #757575; // Cinza neutro
+      top: 15px; // Alinhamento vertical
+    }
+
+    // Estilo dos Ícones (matSuffix)
+    .mat-icon {
+      font-size: 20px;
+      color: #9e9e9e; // Cinza para os ícones
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  // Estilo do Menu do Autocomplete que abre (Dropdown)
+  .mat-autocomplete-panel {
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); // Sombra profissional
+    margin-top: 5px;
+
+    .mat-option {
+      font-size: 13px;
+      height: 42px; // Altura mais compacta das opções
+
+      &:hover {
+        background-color: #f3f0ff; // Roxo sutil ao passar o mouse, combinando com o hover dos cards
+      }
+
+      &.mat-selected:not(.mat-option-multiple) {
+        background-color: rgba(63, 81, 181, 0.08); // Azul sutil na seleção
+        color: #3f51b5;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Alinhamento para os ícones dentro das opções do Autocomplete no HTML
+.option-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #bdbdbd; // Ícones mais claros dentro do menu
+  }
+}

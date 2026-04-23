@@ -1,0 +1,83 @@
+<div class="form-container">
+  <mat-card class="form-card mat-elevation-z3">
+    <mat-card-header>
+      <mat-card-title>
+        {{ isEditMode ? "Editar Perfil" : "Novo Perfil" }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        Preencha os dados abaixo para configurar o acesso ao sistema
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <form [formGroup]="roleForm" (ngSubmit)="salvar()">
+      <mat-card-content class="form-body">
+        
+        <div class="form-grid">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="half-width">
+            <mat-label>Nome do Perfil</mat-label>
+            <input matInput formControlName="name" placeholder="Ex: ROLE_ADMIN" />
+            <mat-icon matPrefix>person</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="half-width">
+            <mat-label>Descrição</mat-label>
+            <input matInput formControlName="description" placeholder="Ex: Administrador do sistema" />
+            <mat-icon matPrefix>description</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="permission-section">
+          <h3 class="section-title">Gerenciar Permissões</h3>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Buscar permissão...</mat-label>
+            <input matInput (keyup)="filtrarPermissoes($event)" placeholder="Ex: ROLE_USER" />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+
+          <div class="table-container mat-elevation-z2">
+            <table mat-table [dataSource]="dataSource" class="full-width">
+              
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Identificador </th>
+                <td mat-cell *matCellDef="let perm"> <code>{{perm.name}}</code> </td>
+              </ng-container>
+
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Descrição </th>
+                <td mat-cell *matCellDef="let perm"> <span class="text-muted">{{perm.description}}</span> </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let perm">
+                  @if (!selectedPermissionIds.has(perm.id)) {
+                    <button type="button" mat-flat-button color="primary" (click)="togglePermission(perm.id)">
+                      <mat-icon>add</mat-icon> Atribuir
+                    </button>
+                  } @else {
+                    <button type="button" mat-flat-button color="warn" (click)="togglePermission(perm.id)">
+                      <mat-icon>remove</mat-icon> Remover
+                    </button>
+                  }
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['name', 'description', 'actions']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['name', 'description', 'actions'];"></tr>
+            </table>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end" class="form-actions">
+        <button mat-button type="button" routerLink="/home/usuarios-list">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="roleForm.invalid">
+          {{ isEditMode ? "Atualizar" : "Salvar" }}
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,137 @@
+<div class="content-wrapper">
+  <mat-card class="list-card">
+    <mat-card-header class="header-list">
+      <mat-card-title>Gestão de Cargos</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="main-content">
+      <div class="management-container">
+        <div class="top-row">
+          <button mat-flat-button color="primary" (click)="irParaCadastro()">
+            <mat-icon>add</mat-icon> NOVO CARGO
+          </button>
+          
+          <button
+            mat-flat-button
+            color="warn"
+            (click)="emitirExcluir()"
+            [disabled]="!selection.hasValue()"
+            *ngIf="selection.hasValue()"
+          >
+            <mat-icon>delete</mat-icon> EXCLUIR ({{ selection.selected.length }})
+          </button>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-grid">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Cargo</mat-label>
+              <input
+                matInput
+                [(ngModel)]="filterValues.position"
+                name="position"
+                placeholder="Filtrar por cargo"
+              />
+              <mat-icon matPrefix>badge</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Descrição</mat-label>
+              <input
+                matInput
+                [(ngModel)]="filterValues.description"
+                name="description"
+                placeholder="Filtrar por descrição"
+              />
+              <mat-icon matPrefix>description</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="filter-actions-row">
+            <button mat-button (click)="limparFiltros()">
+              <mat-icon>restart_alt</mat-icon> Limpar
+            </button>
+            <button mat-flat-button color="primary" (click)="emitirFiltro()">
+              <mat-icon>filter_alt</mat-icon> Filtrar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container mat-elevation-z2">
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="full-width-table"
+        >
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Cargo</th>
+            <td mat-cell *matCellDef="let row">{{ row.position }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Descrição</th>
+            <td mat-cell *matCellDef="let row">{{ row.description }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="active">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let row">
+              <span class="status-badge" [ngClass]="row.active ? 'active' : 'inactive'">
+                {{ row.active ? "Ativo" : "Inativo" }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let row">
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="editarPessoa(row)"
+                matTooltip="Editar"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns" 
+              [class.selected-row]="selection.isSelected(row)"></tr>
+        </table>
+        
+                <mat-paginator
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5, 10, 20, 50, 100, 300]"
+          (page)="onPageChange($event)"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

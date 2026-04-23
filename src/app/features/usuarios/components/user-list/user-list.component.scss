@@ -1,0 +1,135 @@
+/* login.component.scss - Versão Consolidada e Corrigida */
+
+/* 1. Layout Principal */
+.content-wrapper {
+  padding: 12px;
+}
+
+.main-content {
+  padding: 12px 16px !important;
+}
+
+.list-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 8px;
+  background: white;
+}
+
+/* 2. Container de Gestão e Top Row */
+.management-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.top-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+/* 3. Seção de Filtros (Correção Visual) */
+.filter-section {
+  background-color: transparent; /* Remove o fundo cinza */
+  padding: 8px 0 20px 0;         /* Ajusta o espaçamento superior e inferior */
+  border-radius: 0;
+  border: none;                 /* Remove a borda que criava o "quadrado" cinza */
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* SOLUÇÃO PARA FUNDO BRANCO (Sem quebrar ícones e labels) */
+:host ::v-deep {
+  .filter-grid {
+    .mat-mdc-text-field-wrapper {
+      background-color: white !important;
+      /* Adiciona uma borda sutil se achar que ficou "solto" demais no branco */
+      border-radius: 4px;
+    }
+
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+      background-color: transparent !important;
+    }
+  }
+}
+
+.filter-actions-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+  border-top: 1px solid #f0f0f0; /* Linha divisória bem suave */
+  padding-top: 16px;
+}
+
+/* 4. Tabela e Visualização de Dados */
+.table-container {
+  width: 100%;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid #eee;
+  background: white;
+  margin-top: 8px;
+}
+
+.full-width-table {
+  width: 100%;
+}
+
+.mat-mdc-row {
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+.selected-row {
+  background-color: rgba(25, 118, 210, 0.05) !important;
+}
+
+/* 5. Status Badges Profissionais */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  &.active {
+    background-color: #e6fffa;
+    color: #2c7a7b;
+    border: 1px solid #b2f5ea;
+  }
+  
+  &.inactive {
+    background-color: #fff5f5;
+    color: #c53030;
+    border: 1px solid #feb2b2;
+  }
+}
+
+/* 6. Textos e Utilitários */
+.text-secondary {
+  color: #666;
+  font-size: 12px;
+}
+
+.font-medium {
+  font-weight: 500;
+  color: #2d3436;
+}
+
+/* 7. Responsividade */
+@media (max-width: 1200px) {
+  .mat-column-updatedAt, 
+  .mat-column-createdAt {
+    display: none;
+  }
+}

@@ -1,0 +1,116 @@
+.form-container {
+  // Removido o padding excessivo para ganhar espaço lateral
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-card {
+  width: 100%;
+  // Removido o max-width ou aumentado para preencher monitores grandes
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 24px;
+}
+
+.form-body {
+  padding: 0 16px;
+}
+
+// Classe que faz os campos "esticarem" para preencher a linha
+.dynamic-field {
+  flex: 1 1 300px; // Cresce para ocupar o espaço, mas não fica menor que 300px
+  width: 100%;
+}
+
+.full-width {
+  flex: 1 1 100%;
+}
+
+.small-field {
+  flex: 0.5 1 120px; // Ocupa menos espaço (metade de um campo normal)
+}
+
+
+.status-toggle-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 16px;
+  background-color: #fafafa; // Fundo leve para destacar que é uma área de controle
+  border: 1px dashed #ddd; // Borda sutil
+  border-radius: 8px;
+  height: 56px; // Mesma altura dos inputs de texto
+
+  .toggle-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .toggle-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .text-active {
+    color: #2e7d32; // Verde escuro
+    font-weight: 600;
+  }
+
+  .text-inactive {
+    color: #d32f2f; // Vermelho
+    font-weight: 600;
+  }
+
+  .status-icon {
+    font-size: 20px;
+    margin-left: 8px;
+  }
+}
+
+.Section-title {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 32px 0 12px 0; // Aumentei o margin superior (32px) para separar das seções
+  font-weight: 600;
+  color: black; // Cor de destaque para o endereço
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.custom-form-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  gap: 12px;
+  background-color: #fafafa;
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 600px) {
+  .dynamic-field,
+  .small-field {
+    flex: 1 1 100%;
+  }
+}

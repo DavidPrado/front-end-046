@@ -1,0 +1,86 @@
+/* Layout Principal */
+.content-wrapper {
+  padding: 12px;
+}
+
+.list-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 8px;
+  background: white;
+}
+
+.main-content {
+  padding: 12px 16px !important;
+}
+
+.management-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.top-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+/* Seção de Filtros */
+.filter-section {
+  background-color: transparent; /* Removido o cinza */
+  padding: 0;                    /* Ajustado padding */
+  margin-bottom: 24px;
+  border: none;                  /* Removido borda */
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.filter-actions-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+}
+
+/* Tabela */
+.table-container {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  background: white;
+  margin-top: 8px;
+}
+
+.full-width-table {
+  width: 100%;
+}
+
+.selected-row {
+  background-color: #e8effd !important;
+}
+
+/* --- SOLUÇÃO PARA FUNDO BRANCO NOS INPUTS --- */
+:host ::v-deep {
+  // Alveja o container principal do campo de texto
+  .mat-mdc-text-field-wrapper {
+    background-color: white !important;
+  }
+
+  // Remove o fundo da área interna de digitação
+  .mat-mdc-form-field-infix {
+    background-color: white !important;
+  }
+
+  // Garante que o estado focado também permaneça branco
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+    background-color: white !important;
+  }
+}

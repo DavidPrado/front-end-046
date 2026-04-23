@@ -1,0 +1,79 @@
+<div [formGroup]="form" class="row">
+  <mat-form-field appearance="outline" class="col-md-6">
+    <mat-label>Empresa / Unidade</mat-label>
+    <input
+      type="text"
+      placeholder="Digite o nome da unidade..."
+      matInput
+      formControlName="idEnterprise"
+      [matAutocomplete]="autoEnterprise"
+    />
+    <mat-autocomplete
+      #autoEnterprise="matAutocomplete"
+      [displayWith]="displayFn"
+    >
+      <mat-option
+        *ngFor="let empresa of filteredEnterprise$ | async"
+        [value]="empresa"
+      >
+        <div class="option-content">
+          <mat-icon>business</mat-icon>
+          <span>{{ empresa.name }}</span>
+        </div>
+      </mat-option>
+
+      <mat-option *ngIf="(filteredEnterprise$ | async)?.length === 0" disabled>
+        Nenhuma unidade encontrada
+      </mat-option>
+    </mat-autocomplete>
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-error *ngIf="form.get('idEnterprise')?.hasError('required')">
+      A unidade é obrigatória.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="col-md-6">
+    <mat-label>Cargo / Função</mat-label>
+    <input
+      type="text"
+      placeholder="Digite o cargo..."
+      matInput
+      formControlName="idPosition"
+      [matAutocomplete]="autoPosition"
+    />
+    <mat-autocomplete #autoPosition="matAutocomplete" [displayWith]="displayFn">
+      <mat-option
+        *ngFor="let cargo of filteredPositions$ | async"
+        [value]="cargo"
+      >
+        <div class="option-content">
+          <mat-icon>badge</mat-icon>
+          <span>{{ cargo.position }}</span>
+        </div>
+      </mat-option>
+
+      <mat-option *ngIf="(filteredPositions$ | async)?.length === 0" disabled>
+        Nenhum cargo encontrado
+      </mat-option>
+    </mat-autocomplete>
+    <mat-icon matSuffix>work_outline</mat-icon>
+    <mat-error *ngIf="form.get('idPosition')?.hasError('required')">
+      O cargo é obrigatório.
+    </mat-error>
+  </mat-form-field>
+  <div
+    class="col-12 d-flex justify-content-end mb-3"
+    *ngIf="existingEmployeeId"
+  >
+    <button
+      mat-button
+      color="warn"
+      type="button"
+      (click)="removeEmployeeVincule()"
+      class="btn-remove-vincule"
+    >
+      <mat-icon>delete_forever</mat-icon>
+      REMOVER VÍNCULO
+    </button>
+  </div>
+</div>

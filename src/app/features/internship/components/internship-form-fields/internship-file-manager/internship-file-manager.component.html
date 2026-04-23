@@ -1,0 +1,138 @@
+<mat-card class="mat-elevation-z2" style="margin-top: 16px">
+  <mat-card-header>
+    <mat-card-title>Documentos Anexos</mat-card-title>
+    <mat-card-subtitle
+      >Gerencie os arquivos e comprovantes do estágio</mat-card-subtitle
+    >
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate" *ngIf="uploading"></mat-progress-bar>
+
+    <mat-list *ngIf="files.length > 0">
+      <h3 mat-subheader>Arquivos Anexados</h3>
+      <mat-list-item *ngFor="let file of files">
+        <mat-icon matListItemIcon color="primary">insert_drive_file</mat-icon>
+
+        <div matListItemTitle>
+          {{ file.fileName }}
+          <span
+            *ngIf="file.fileDescription"
+            style="
+              margin-left: 12px;
+              color: #757575;
+              font-size: 0.9em;
+              font-weight: normal;
+            "
+          >
+            — {{ file.fileDescription }}
+          </span>
+        </div>
+
+        <div matListItemMeta>
+          <button
+            mat-icon-button
+            (click)="download(file)"
+            matTooltip="Baixar arquivo"
+          >
+            <mat-icon>download</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="deleteFile(file.id)"
+            matTooltip="Excluir"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-list-item> </mat-list
+    ><mat-divider *ngIf="files.length > 0" style="margin: 16px 0"></mat-divider>
+
+    <form [formGroup]="uploadForm">
+      <div formArrayName="uploads">
+        <h3 mat-subheader *ngIf="uploads.length > 0">Novos Anexos</h3>
+
+        <div
+          *ngFor="let row of uploads.controls; let i = index"
+          [formGroupName]="i"
+          style="
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 12px;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            background: #fafafa;
+          "
+        >
+          <mat-form-field
+            appearance="outline"
+            style="flex: 3"
+            subscriptSizing="dynamic"
+          >
+            <mat-label>Descrição</mat-label>
+            <input
+              matInput
+              formControlName="description"
+              placeholder="Ex: Termo de Compromisso"
+            />
+          </mat-form-field>
+
+          <div
+            style="
+              flex: 2;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+            "
+          >
+            <input
+              type="file"
+              #fileInput
+              style="display: none"
+              (change)="onFileSelected($event, i)"
+              multiple
+            />
+            <button
+              mat-stroked-button
+              type="button"
+              (click)="fileInput.click()"
+            >
+              <mat-icon>attach_file</mat-icon> Selecionar
+            </button>
+            <small
+              class="text-truncate"
+              style="max-width: 150px; color: #666; margin-top: 4px"
+            >
+              {{ row.value.fileNameLabel || "Nenhum arquivo" }}
+            </small>
+          </div>
+
+          <div style="display: flex; gap: 8px">
+            <button
+              mat-mini-fab
+              color="primary"
+              [disabled]="!row.valid || uploading"
+              (click)="executeUpload(i)"
+              matTooltip="Fazer Upload"
+            >
+              <mat-icon>cloud_upload</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="removeUploadRow(i)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div style="margin-top: 16px">
+      <button mat-stroked-button color="primary" (click)="addUploadRow()">
+        <mat-icon>add_circle_outline</mat-icon> ADICIONAR NOVO CAMPO
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

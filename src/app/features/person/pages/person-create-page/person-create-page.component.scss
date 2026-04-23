@@ -1,0 +1,120 @@
+// 1. Container de Seleção de Vínculo
+.role-selection-grid {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+  justify-content: flex-start;
+}
+
+.role-card {
+  position: relative;
+  width: 220px;
+  min-height: 150px;
+  cursor: pointer;
+  border: 2px solid #e0e0e0 !important;
+  border-radius: 12px !important;
+  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+
+  &:hover {
+    border-color: #b39ddb !important;
+    background-color: #f3f0ff;
+  }
+
+  &.active {
+    border: 2px solid #3f51b5 !important;
+    background-color: rgba(63, 81, 181, 0.05) !important;
+    box-shadow: 0 4px 10px rgba(63, 81, 181, 0.15);
+    .role-title { color: #3f51b5; }
+    .card-header-icon mat-icon { color: #3f51b5; }
+  }
+
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px !important;
+    text-align: center;
+  }
+}
+
+.card-header-icon mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #9e9e9e;
+}
+
+.role-title {
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  display: block;
+}
+
+.role-description {
+  font-size: 0.85rem;
+  color: #777;
+  margin-top: 4px;
+  display: block;
+}
+
+.card-footer-selection {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.snack-error {
+  background-color: #d32f2f !important; // Vermelho padrão de erro
+  color: white !important;
+  
+  .mat-mdc-snack-bar-action {
+    color: white !important; // Cor do botão "Fechar"
+  }
+}
+
+.snack-success {
+  background-color: #388e3c !important; // Verde para sucesso
+  color: white !important;
+}
+
+// 2. Containers dos Formulários Dinâmicos
+.dynamic-forms-container {
+  margin-top: 30px;
+}
+
+.form-section-wrapper {
+  margin-bottom: 32px;
+  padding: 24px;
+  background: #fdfdfd;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    color: #333;
+    mat-icon { color: #3f51b5; }
+    h4 {
+      margin: 0;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+// 3. Estrutura do Rodapé (Apenas posicionamento)
+.stepper-actions {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  gap: 12px;
+  margin-top: 40px;
+  padding: 24px 0;
+  border-top: 1px solid #e0e0e0;
+}

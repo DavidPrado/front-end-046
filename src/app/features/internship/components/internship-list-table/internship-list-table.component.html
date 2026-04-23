@@ -1,0 +1,233 @@
+<div class="content-wrapper">
+  <mat-card class="list-card">
+    <mat-card-header class="header-list">
+      <mat-card-title>Gestão de Estágios</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="main-content">
+      <div class="management-container">
+        <div class="top-row">
+          <button mat-flat-button color="primary" (click)="irParaCadastro()">
+            <mat-icon>add</mat-icon> NOVO ESTÁGIO
+          </button>
+
+          <button
+            mat-flat-button
+            color="warn"
+            (click)="emitirExcluir()"
+            [disabled]="!selection.hasValue()"
+            *ngIf="selection.hasValue()"
+          >
+            <mat-icon>delete</mat-icon> EXCLUIR ({{
+              selection.selected.length
+            }})
+          </button>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-grid">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Nome do Aluno</mat-label>
+              <input
+                matInput
+                [(ngModel)]="filterValues.studentName"
+                name="filterStudentName"
+                placeholder="Filtrar por nome do Aluno"
+              />
+              <mat-icon matPrefix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>CPF do Aluno</mat-label>
+              <input
+                matInput
+                [mask]="'000.000.000-00'"
+                [(ngModel)]="filterValues.studentCpf"
+                name="filterStudentCpf"
+                placeholder="000.000.000-00"
+              />
+              <mat-icon matPrefix>badge</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Empresa</mat-label>
+              <input
+                matInput
+                [(ngModel)]="filterValues.enterpriseName"
+                name="filterEnterpriseName"
+                placeholder="Filtrar por nome da Empresa"
+              />
+              <mat-icon matPrefix>business</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>CNPJ</mat-label>
+              <input
+                matInput
+                [mask]="'00.000.000/0000-00'"
+                [(ngModel)]="filterValues.enterpriseCnpj"
+                name="filterEnterpriseCnpj"
+                placeholder="00.000.000/0000-00"
+              />
+              <mat-icon matPrefix>assignment_ind</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="filter-actions-row">
+            <button mat-button (click)="limparFiltros()">
+              <mat-icon>restart_alt</mat-icon> Limpar
+            </button>
+
+            <button
+              mat-stroked-button
+              type="button"
+              [color]="filterValues.vencimento30Dias ? 'warn' : 'accent'"
+              (click)="filtrarProximos30Dias()"
+            >
+              <mat-icon>{{
+                filterValues.vencimento30Dias ? "alarm_on" : "alarm"
+              }}</mat-icon>
+              Vencendo nos próximos 30 dias
+            </button>
+
+            <button mat-flat-button color="primary" (click)="emitirFiltro()">
+              <mat-icon>filter_alt</mat-icon> Filtrar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container mat-elevation-z2">
+        <table
+          mat-table
+          [dataSource]="tableDataSource"
+          matSort
+          class="full-width-table"
+        >
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="studentName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+            <td mat-cell *matCellDef="let row">{{ row.studentName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="studentCpf">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>CPF</th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.studentCpf | mask: "000.000.000-00" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="enterpriseName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Empresa</th>
+            <td mat-cell *matCellDef="let row">{{ row.enterpriseName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="enterpriseCnpj">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>CNPJ</th>
+            <td mat-cell *matCellDef="let row">{{ row.enterpriseCnpj }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="startDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Dt. Início
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.startDate | date: "dd/MM/yyyy" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="endDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Dt. Fim</th>
+            <td
+              mat-cell
+              *matCellDef="let row"
+              [style.color]="isPrestesAVencer(row.endDate) ? 'red' : 'inherit'"
+            >
+              {{ row.endDate | date: "dd/MM/yyyy" }}
+              <mat-icon
+                *ngIf="isPrestesAVencer(row.endDate)"
+                matTooltip="Vence em breve!"
+                style="font-size: 16px; vertical-align: middle"
+                >warning</mat-icon
+              >
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="terminationContract">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Situação</th>
+            <td mat-cell *matCellDef="let row">
+              <div
+                [ngStyle]="{
+                  color: row.terminationContract ? '#d32f2f' : '#388e3c',
+                  'font-weight': '500',
+                }"
+              >
+                <mat-icon style="vertical-align: middle; font-size: 18px">
+                  {{
+                    row.terminationContract
+                      ? "event_busy"
+                      : "running_with_errors"
+                  }}
+                </mat-icon>
+                {{ row.terminationContract ? "Finalizado" : "Em andamento" }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="hoursPerWeek">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Hr. Semana
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.hoursPerWeek }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center">
+              Ações
+            </th>
+            <td mat-cell *matCellDef="let row" style="text-align: center">
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="editar(row)"
+                matTooltip="Editar"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5, 10, 20, 50, 100, 300]"
+          (page)="onPageChange($event)"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

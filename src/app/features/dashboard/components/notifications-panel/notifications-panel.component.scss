@@ -1,0 +1,216 @@
+.notifications-container {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  margin: 0 auto;
+
+  .panel-title {
+    margin: 0 0 16px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  // BARRA DE FILTROS (BOTÕES + SELECT)
+  .filters-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+
+    .status-filters {
+      display: flex;
+      gap: 6px;
+    }
+
+    button {
+      height: 32px;
+      line-height: 32px;
+      padding: 0 16px;
+      border-radius: 16px;
+      font-size: 0.85rem;
+      color: #666;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+
+      &.active {
+        background-color: #e8eaf6;
+        color: #3f51b5;
+        font-weight: 600;
+      }
+    }
+
+    // SELETOR DE CATEGORIAS (CORRIGIDO: Fora do .notification-item)
+    .category-select {
+      height: 32px;
+      padding: 0 12px;
+      border-radius: 16px;
+      border: 1px solid #e0e0e0;
+      background-color: #fff;
+      color: #555;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+      min-width: 150px;
+
+      &:hover {
+        border-color: #3f51b5;
+        background-color: #fcfcfc;
+      }
+
+      &:focus {
+        border-color: #3f51b5;
+        box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.1);
+      }
+
+      option {
+        background-color: white;
+        color: #333;
+        padding: 8px;
+      }
+    }
+  }
+}
+
+// CONTEÚDO SCROLLÁVEL
+.scrollable-content {
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 4px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 10px;
+  }
+}
+
+// ITEM DE NOTIFICAÇÃO INDIVIDUAL
+.notification-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid #f5f5f5;
+  background: #fff;
+
+  &:hover {
+    background-color: #fcfcfc;
+    border-color: #e0e0e0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+  }
+
+  // Estilo para Não Lidas
+  &.unread {
+    background-color: #f0f7ff;
+    border-left: 4px solid #3f51b5;
+    
+    .content .header .title {
+      font-weight: 700;
+      color: #1a237e;
+    }
+  }
+
+  // Estilo para Globais (Sistema)
+  &.is-global {
+    background-color: #fffde7;
+    border-style: dashed;
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    background: #f5f5f5;
+    border-radius: 50%;
+    color: #78909c;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .content {
+    flex: 1;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; // Título à esquerda, Badge à direita
+      margin-bottom: 4px;
+
+      .title {
+        font-size: 0.95rem;
+        color: #2c3e50;
+        font-weight: 500;
+      }
+
+      .category-badge {
+        font-size: 0.7rem;
+        background: #eceff1;
+        color: #546e7a;
+        padding: 2px 8px;
+        border-radius: 10px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+    }
+
+    .message {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #5d6d7e;
+      line-height: 1.4;
+    }
+
+    .footer {
+      margin-top: 8px;
+      display: flex;
+      justify-content: flex-end;
+      font-size: 0.75rem;
+      color: #b0bec5;
+    }
+  }
+}
+
+// ESTADOS VAZIOS E BOTÕES FINAIS
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #b0bec5;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+  }
+}
+
+.btn-more {
+  margin: 16px auto;
+  display: block; // Centraliza o botão
+  color: #3f51b5;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}

@@ -1,0 +1,98 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened class="sidenav">
+    <div class="brand-logo">
+      <div class="logo-wrapper">
+        <img src="assets/logo-home2.jpeg" alt="Etec Logo" />
+      </div>
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/home/dashboard">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Início</span>
+      </a>
+
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>people</mat-icon>
+            <span>Usuários</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-nav-list class="sub-menu">
+          <a mat-list-item routerLink="/home/usuarios-list">
+            <mat-icon matListItemIcon>person_add</mat-icon>
+            <span matListItemTitle>Cadastro</span>
+          </a>
+          <a mat-list-item routerLink="/home/perfil-list">
+            <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
+            <span matListItemTitle>Perfis</span>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>assignment</mat-icon>
+            <span>Cadastro Geral</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list class="sub-menu">
+          <a mat-list-item routerLink="/home/pessoas/list">
+            <mat-icon matListItemIcon>person</mat-icon>
+            <span matListItemTitle>Cadastro Pessoa</span>
+          </a>
+          <a mat-list-item routerLink="/home/cursos/list">
+            <mat-icon matListItemIcon>menu_book</mat-icon>
+            <span matListItemTitle>Cadastro Curso</span>
+          </a>
+          <a mat-list-item routerLink="/home/empresas/list">
+            <mat-icon matListItemIcon>business</mat-icon>
+            <span matListItemTitle>Cadastro Empresa</span>
+          </a>
+          <a mat-list-item routerLink="/home/cargos/list">
+            <mat-icon matListItemIcon>work</mat-icon>
+            <span matListItemTitle>Cadastro Cargo</span>
+          </a>
+           <a mat-list-item routerLink="/home/escolas/list">
+            <mat-icon matListItemIcon>school</mat-icon>
+            <span matListItemTitle>Cadastro Escola</span>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+            <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>assignment_ind</mat-icon>
+            <span>Gestão de Estágio </span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list class="sub-menu">
+          <a mat-list-item routerLink="/home/estagios/list">
+            <mat-icon matListItemIcon>cases</mat-icon>
+            <span matListItemTitle>Cadastro Estágio</span>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <a mat-list-item routerLink="/home/configuracoes">
+        <mat-icon matListItemIcon>settings</mat-icon>
+        <span matListItemTitle>Configurações</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="top-bar">
+      <span class="spacer"></span>
+      <span class="user-info">Olá, {{ userName }}</span>
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

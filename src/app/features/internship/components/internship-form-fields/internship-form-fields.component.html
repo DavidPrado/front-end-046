@@ -1,0 +1,219 @@
+<div class="form-container">
+  <mat-card class="form-card mat-elevation-z2">
+    <mat-card-header>
+      <mat-card-title>
+        {{ isEditMode ? "Editar Estágio" : "Novo Estágio" }}
+      </mat-card-title>
+      <mat-card-subtitle>Informações contratuais do estágio</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-card-content class="form-body">
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Aluno*</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="idStudent"
+              [matAutocomplete]="autoStudent"
+            />
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-autocomplete
+              #autoStudent="matAutocomplete"
+              [displayWith]="displayFn"
+            >
+              <mat-option
+                *ngFor="let student of filteredStudents$ | async"
+                [value]="student"
+              >
+                <span class="option-text">
+                  {{ student.namePerson || student.nomePessoa }}
+                  <small style="margin-left: 8px; color: gray">
+                    CPF: {{ student.cpfPerson || student.cpfPessoa }}
+                  </small>
+                </span>
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="form.get('idStudent')?.hasError('required')">
+              Selecione um aluno da lista
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Empresa*</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="idEnterprise"
+              [matAutocomplete]="autoEnterprise"
+            />
+            <mat-icon matPrefix>business</mat-icon>
+            <mat-autocomplete
+              #autoEnterprise="matAutocomplete"
+              [displayWith]="displayFn"
+            >
+              <mat-option
+                *ngFor="let ent of filteredEnterprises$ | async"
+                [value]="ent"
+              >
+                {{ ent.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Supervisor*</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="idEmployeeSupervisor"
+              [matAutocomplete]="autoSupervisor"
+            />
+            <mat-icon matPrefix>supervisor_account</mat-icon>
+            <mat-autocomplete
+              #autoSupervisor="matAutocomplete"
+              [displayWith]="displayFn"
+            >
+              <mat-option
+                *ngFor="let sup of filteredSupervisors$ | async"
+                [value]="sup"
+              >
+                {{ sup.namePerson || sup.name }}
+                <small style="margin-left: 8px; color: gray">
+                  CPF: {{ sup.cpfPerson || sup.cpfPessoa }}
+                </small>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Data de Início*</mat-label>
+            <input matInput formControlName="startDate" type="date" />
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Data de Término</mat-label>
+            <input matInput formControlName="endDate" type="date" />
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Bolsa Auxílio (R$)</mat-label>
+            <input
+              matInput
+              formControlName="intershipSalary"
+              type="number"
+              placeholder="0.00"
+            />
+            <mat-icon matPrefix>attach_money</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Horas por Semana</mat-label>
+            <input matInput formControlName="hoursPerWeek" type="number" />
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Horas por Dia</mat-label>
+            <input matInput formControlName="hoursPerDay" type="number" />
+          </mat-form-field>
+        </div>
+        <mat-divider style="margin: 16px 0"></mat-divider>
+
+        <div class="termination-section">
+          <div class="checkbox-row">
+            <mat-checkbox formControlName="terminationContract" color="warn">
+              Contrato Rescindido?
+            </mat-checkbox>
+          </div>
+
+          <div *ngIf="form.get('terminationContract')?.value">
+            <mat-form-field
+              appearance="outline"
+              class="full-width"
+              style="margin-top: 10px; width: 100%"
+            >
+              <mat-label>Motivo da Rescisão</mat-label>
+              <textarea
+                matInput
+                formControlName="terminationContractReason"
+                rows="4"
+                placeholder="Descreva detalhadamente o motivo da rescisão..."
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="3"
+                cdkAutosizeMaxRows="8"
+              ></textarea>
+              <mat-icon matPrefix>description</mat-icon>
+
+              <mat-hint>Explique o encerramento do vínculo</mat-hint>
+
+              <mat-error
+                *ngIf="
+                  form.get('terminationContractReason')?.hasError('required')
+                "
+              >
+                O motivo é obrigatório para contratos rescindidos.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-divider></mat-divider>
+
+      <div
+        class="custom-form-footer"
+        style="
+          display: flex;
+          justify-content: flex-end;
+          gap: 8px;
+          padding: 16px;
+        "
+      >
+        <button mat-button type="button" (click)="cancel.emit()">
+          CANCELAR
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          <mat-icon>save</mat-icon>
+          {{ isEditMode ? "ATUALIZAR" : "SALVAR" }}
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

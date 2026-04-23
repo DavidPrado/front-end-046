@@ -1,0 +1,87 @@
+<div class="notifications-container">
+  <div class="panel-header">
+    <h3 class="panel-title">Notificações</h3>
+
+    <div class="filters-bar">
+      <div class="status-filters">
+        <button
+          mat-button
+          [class.active]="filterRead === null"
+          (click)="applyFilter(null)"
+        >
+          Todas
+        </button>
+        <button
+          mat-button
+          [class.active]="filterRead === false"
+          (click)="applyFilter(false)"
+        >
+          Não lidas
+        </button>
+        <button
+          mat-button
+          [class.active]="filterRead === true"
+          (click)="applyFilter(true)"
+        >
+          Lidas
+        </button>
+      </div>
+
+      <select
+        class="category-select"
+        (change)="applyCategoryFilter($any($event.target).value)"
+      >
+        <option value="ALL">Todas Categorias</option>
+        @for (cat of categories; track cat) {
+          <option [value]="cat">{{ categoryLabels[cat] }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="scrollable-content">
+    @for (item of notifications; track item.id) {
+      <div
+        class="notification-item"
+        [class.unread]="!item.isRead"
+        [class.is-global]="item.recipientId === null"
+        (click)="!item.isRead ? markAsRead(item.id) : null"
+      >
+        <div class="status-indicator" [attr.data-category]="item.category">
+          @if (!item.recipientId) {
+            <mat-icon title="Sistema">settings_suggest</mat-icon>
+          } @else {
+            <mat-icon>person</mat-icon>
+          }
+        </div>
+
+        <div class="content">
+          <div class="header">
+            <span class="title">{{ item.title }}</span>
+            <span class="category-badge">{{
+              categoryLabels[item.category]
+            }}</span>
+          </div>
+
+          <p class="message">{{ item.message }}</p>
+
+          <div class="footer">
+            <span class="date">{{ item.createdAt | date: "short" }}</span>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <div class="empty-state">
+        <mat-icon>notifications_none</mat-icon>
+        <p>Nenhuma notificação encontrada.</p>
+      </div>
+    }
+
+    @if (notifications.length > 0 && hasMore) {
+      <button mat-button class="btn-more" (click)="loadMore()">
+        <mat-icon>expand_more</mat-icon>
+        Carregar mais
+      </button>
+    }
+  </div>
+</div>

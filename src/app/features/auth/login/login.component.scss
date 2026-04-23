@@ -1,0 +1,188 @@
+/* login.component.scss - Versão Profissional Clean */
+
+// 1. Variáveis de Design System
+$bg-light: #f8f9fa;      // Cinza ultra claro (mais limpo)
+$text-main: #2d3436;     // Grafite para leitura
+$accent-blue: #1976d2;   // Azul institucional para detalhes
+$white: #ffffff;
+$border-color: #e9ecef;
+
+// 2. Reset e Container Principal
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+  background-color: $white;
+}
+
+// 3. Painel Esquerdo (Identidade Visual)
+.brand-section {
+  flex: 1.2;
+  background-color: $bg-light;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  border-right: 1px solid $border-color;
+
+  .logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .main-logo {
+      width: 100%;
+      max-width: 450px; // Aumentado para dar destaque
+      height: auto;
+      margin-bottom: 30px;
+      display: block;
+      border-radius: 12px;
+      background: $white;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); // Sombra bem sutil e elegante
+      object-fit: contain;
+    }
+
+    .school-info {
+      text-align: center;
+      .unit-name {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+        color: $text-main;
+        line-height: 1.2;
+      }
+      .city {
+        font-size: 1.1rem;
+        color: #636e72;
+        margin-top: 8px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+// 4. Painel Direito (Login)
+.form-section {
+  flex: 1;
+  background-color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .login-card {
+    width: 85%;
+    max-width: 400px;
+    padding: 20px;
+    box-shadow: none;
+    background: transparent;
+
+    mat-card-header {
+      justify-content: flex-start;
+      margin-bottom: 35px;
+      padding: 0;
+
+      mat-card-title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: $text-main;
+        letter-spacing: -0.5px;
+        
+        &::after {
+          content: '';
+          display: block;
+          width: 35px;
+          height: 4px;
+          background-color: $accent-blue;
+          margin-top: 10px;
+          border-radius: 2px;
+        }
+      }
+    }
+
+    .input-container {
+      margin-bottom: 8px;
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 25px;
+      
+      .forgot-link {
+        color: $accent-blue;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        &:hover { text-decoration: underline; }
+      }
+    }
+
+    // Botão com Visual Profissional
+    .btn-login {
+      width: 100%;
+      background-color: $text-main; // Botão Escuro/Sleek
+      color: $white;
+      padding: 12px 0; 
+      height: 54px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.2s ease-in-out;
+
+      &:hover:not(:disabled) {
+        background-color: #000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        background-color: #e0e0e0;
+        color: #a0a0a0;
+      }
+    }
+  }
+}
+
+// 5. Mensagens de Erro
+.error-message {
+  background-color: #fff5f5;
+  color: #c0392b;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #fed7d7;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+// 6. Responsividade (Mobile)
+@media (max-width: 992px) {
+  .login-container {
+    flex-direction: column;
+    overflow-y: auto;
+    
+    .brand-section {
+      flex: none;
+      padding: 60px 20px;
+      border-right: none;
+      border-bottom: 1px solid $border-color;
+      
+      .main-logo { max-width: 280px; }
+      .unit-name { font-size: 1.5rem; }
+    }
+    
+    .form-section {
+      padding: 40px 20px;
+      .login-card { width: 100%; }
+    }
+  }
+}

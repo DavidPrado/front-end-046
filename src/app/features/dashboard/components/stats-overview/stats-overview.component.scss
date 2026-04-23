@@ -1,0 +1,36 @@
+.stats-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  height: 100%;
+
+  .header {
+    margin-bottom: 20px;
+    h3 { margin: 0; color: #333; font-weight: 600; }
+    small { color: #888; }
+  }
+
+  .chart-wrapper {
+    position: relative;
+    height: 300px; // Altura fixa para não deformar
+    width: 100%;
+  }
+
+  .stats-list {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+
+    .stat-item {
+      background: #f8f9fa;
+      padding: 8px 15px;
+      border-radius: 4px;
+      border-left: 4px solid #1a237e;
+      
+      .label { font-size: 0.9rem; color: #666; margin-right: 5px; }
+      .value { font-weight: bold; color: #333; }
+    }
+  }
+}

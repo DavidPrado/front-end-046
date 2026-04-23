@@ -1,0 +1,125 @@
+<div class="form-container">
+  <mat-card class="form-card mat-elevation-z2">
+    <mat-card-header>
+      <mat-card-title>{{
+        isEditMode ? "Editar Escola" : "Nova Escola"
+      }}</mat-card-title>
+      <mat-card-subtitle>Informações cadastrais e de contato</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-card-content class="form-body">
+        <div class="form-grid">
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="full-width"
+          >
+            <mat-label>Nome*</mat-label>
+            <input matInput formControlName="name" />
+            <mat-icon matPrefix>school</mat-icon>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Codigo</mat-label>
+            <input matInput formControlName="code" />
+            <mat-icon matPrefix>code</mat-icon>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>E-mail</mat-label>
+            <input matInput formControlName="email" type="email" />
+            <mat-icon matPrefix>email</mat-icon>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Telefone</mat-label>
+            <input matInput formControlName="phone" [mask]="'(00) 0000-0000'" />
+            <mat-icon matPrefix>phone</mat-icon>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Logradouro</mat-label>
+            <input matInput formControlName="street" />
+            <mat-icon matPrefix>streetview</mat-icon>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Número</mat-label>
+            <input matInput formControlName="number" />
+            <mat-icon matPrefix>looks_one</mat-icon>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Complemento</mat-label>
+            <input matInput formControlName="complement" />
+            <mat-icon matPrefix>add</mat-icon>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Bairro</mat-label>
+            <input matInput formControlName="neighborhood" />
+            <mat-icon matPrefix>map</mat-icon>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="dynamic-field"
+          >
+            <mat-label>Cidade</mat-label>
+            <input matInput formControlName="city" />
+            <mat-icon matPrefix>location_city</mat-icon>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="small-field"
+          >
+            <mat-label>UF</mat-label>
+            <mat-select formControlName="uf">
+              @for (state of states; track state) {
+                <mat-option [value]="state">{{ state }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <div class="custom-form-footer">
+        <button mat-button type="button" (click)="cancel.emit()">
+          CANCELAR
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          <mat-icon>save</mat-icon> {{ isEditMode ? "ATUALIZAR" : "SALVAR" }}
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

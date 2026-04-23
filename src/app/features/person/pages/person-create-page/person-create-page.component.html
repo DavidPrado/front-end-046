@@ -1,0 +1,129 @@
+<div class="page-container">
+  <mat-stepper #stepper [linear]="true" class="main-stepper">
+    <mat-step [editable]="!isEditMode">
+      <ng-template matStepLabel>Informações Gerais</ng-template>
+
+      <div class="step-content">
+        <app-person-form-fields
+          [initialData]="personData"
+          [isEditMode]="isEditMode"
+          (save)="handleSave($event)"
+          (cancel)="handleBack()"
+        >
+        </app-person-form-fields>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="roleFormGroup">
+      <ng-template matStepLabel>Definição de Vínculo</ng-template>
+
+      <div class="step-content">
+        <div class="role-instruction">
+          <h3>Como deseja classificar esta pessoa na ETEC?</h3>
+          <p>Você pode selecionar um ou mais vínculos simultaneamente.</p>
+        </div>
+
+        <div class="role-selection-grid">
+          <mat-card
+            class="role-card"
+            [class.active]="isStudent"
+            (click)="toggleRole('student')"
+            appearance="outlined"
+          >
+            <div class="card-header-icon">
+              <mat-icon [color]="isStudent ? 'primary' : ''">school</mat-icon>
+            </div>
+            <mat-card-content>
+              <span class="role-title">ALUNO</span>
+              <span class="role-description">Matrícula e cursos</span>
+            </mat-card-content>
+            <div class="card-footer-selection">
+              <mat-checkbox
+                [checked]="isStudent"
+                color="primary"
+                (click)="$event.stopPropagation()"
+              ></mat-checkbox>
+            </div>
+          </mat-card>
+
+          <mat-card
+            class="role-card"
+            [class.active]="isEmployee"
+            (click)="toggleRole('employee')"
+            appearance="outlined"
+          >
+            <div class="card-header-icon">
+              <mat-icon [color]="isEmployee ? 'primary' : ''">badge</mat-icon>
+            </div>
+            <mat-card-content>
+              <span class="role-title">FUNCIONÁRIO</span>
+              <span class="role-description">Cargos e setores</span>
+            </mat-card-content>
+            <div class="card-footer-selection">
+              <mat-checkbox
+                [checked]="isEmployee"
+                color="primary"
+                (click)="$event.stopPropagation()"
+              ></mat-checkbox>
+            </div>
+          </mat-card>
+        </div>
+
+        <div class="dynamic-forms-container">
+          <div class="form-section-wrapper" *ngIf="isStudent">
+            <div class="section-header">
+              <mat-icon>school</mat-icon>
+              <h4>Dados da Matrícula</h4>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="section-body">
+              <app-student-form-fields
+                [form]="studentForm"
+                [personId]="personId!"
+                [existingStudentId]="existingStudentId"
+                (studentDeleted)="onStudentDeleted()"
+              ></app-student-form-fields>
+            </div>
+          </div>
+
+          <div class="form-section-wrapper" *ngIf="isEmployee">
+            <div class="section-header">
+              <mat-icon>work_outline</mat-icon>
+              <h4>Dados do Contrato</h4>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="section-body">
+              <app-employee-form-fields
+                [form]="employeeForm"
+                [existingEmployeeId]="existingEmployeeId"
+                (deleted)="onEmployeeDeleted()"
+              ></app-employee-form-fields>
+            </div>
+          </div>
+        </div>
+        <div class="stepper-actions">
+          <button mat-flat-button matStepperPrevious class="btn-cancel">
+            <mat-icon>arrow_back</mat-icon>
+            VOLTAR
+          </button>
+
+          <button
+            mat-flat-button
+            class="btn-save"
+            color="primary"
+            type="submit"
+            (click)="onEspecializacaoFinalizada()"
+            [disabled]="
+              (!isStudent && !isEmployee) ||
+              (isStudent && studentForm.invalid) ||
+              (isEmployee && employeeForm.invalid)
+            "
+          >
+            <mat-icon>check</mat-icon>
+            FINALIZAR CADASTRO
+          </button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

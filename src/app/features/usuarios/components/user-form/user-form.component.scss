@@ -1,0 +1,198 @@
+.content-wrapper {
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 1800px; /* Expande bem em 1920px */
+  display: flex;
+  flex-direction: column;
+  height: fit-content; // Faz o card ter apenas a altura do conteúdo
+}
+
+.additional-selection {
+  opacity: 0.75;
+  font-size: 0.85em;
+  margin-left: 5px;
+}
+
+
+.role-option-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}
+
+.role-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.role-description {
+  font-size: 0.85rem;
+  color: #777;
+  font-style: italic;
+  // Faz a descrição sumir com reticências se for muito longa em telas pequenas
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px; 
+}
+
+// Estilo para o contador no trigger que adicionamos antes
+.additional-selection {
+  opacity: 0.7;
+  font-size: 0.9em;
+  margin-left: 4px;
+}
+
+.status-toggle-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 16px;
+  background-color: #fafafa; // Fundo leve para destacar que é uma área de controle
+  border: 1px dashed #ddd; // Borda sutil
+  border-radius: 8px;
+  height: 56px; // Mesma altura dos inputs de texto
+
+  .toggle-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .toggle-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .text-active {
+    color: #2e7d32; // Verde escuro
+    font-weight: 600;
+  }
+
+  .text-inactive {
+    color: #d32f2f; // Vermelho
+    font-weight: 600;
+  }
+
+  .status-icon {
+    font-size: 20px;
+    margin-left: 8px;
+  }
+}
+
+.form-body {
+  padding: 24px 32px !important; // Reduzi o padding vertical de 40px para 24px
+}
+
+.form-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background-color: #f4f7f9;
+  min-height: calc(100vh - 64px);
+}
+
+.form-content {
+  padding: 24px 16px !important;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; // Espaçamento entre campos mais compacto
+}
+
+.half-width {
+  grid-column: span 2;
+}
+
+.full-width {
+  grid-column: span 4;
+}
+
+.medium-width {
+  grid-column: span 2;
+}
+
+.status-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px; // Alinha com a altura dos inputs
+}
+
+.custom-form-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12px 32px; // Padding bem pequeno para não ocupar altura
+  gap: 12px;
+  background-color: #fafafa;
+}
+
+.form-footer {
+  padding: 20px 40px !important;
+  background-color: #fdfdfd;
+  border-top: 1px solid #eee;
+  gap: 16px;
+}
+
+.form-actions {
+  padding: 16px !important;
+  gap: 8px;
+}
+
+.status-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 56px; // Mesma altura do mat-form-field appearance="outline"
+  padding-left: 8px;
+
+  .status-label {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .toggle-wrapper {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1600px) {
+  .form-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1400px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .half-width {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 800px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .full-width {
+    grid-column: span 1;
+  }
+}

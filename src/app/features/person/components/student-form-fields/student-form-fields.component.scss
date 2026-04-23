@@ -1,0 +1,102 @@
+.student-form {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px; // Espaço entre seções (Dados vs Responsáveis)
+
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 16px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px; // Espaçamento generoso entre Escola e Cursos
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 8px 0;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .responsible-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+    animation: fadeIn 0.3s ease-in; // Efeito suave ao adicionar
+
+    .responsible-fields-grid {
+      flex: 1;
+      display: grid;
+      // Define o Parentesco com tamanho fixo (220px) e o nome ocupa o resto
+      grid-template-columns: 220px 1fr; 
+      gap: 20px;
+
+      @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    // Alinha o botão de excluir verticalmente com os campos (compensando o label do Material)
+    button[mat-icon-button] {
+      margin-top: 8px;
+    }
+  }
+
+  .empty-state {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    color: #666;
+    font-style: italic;
+
+    mat-icon {
+      color: #999;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+
+    button {
+      padding: 0 24px;
+      height: 48px; // Botões de ação mais altos
+    }
+  }
+}
+
+// Estilo global para aumentar o "conforto" visual dos campos
+::ng-deep {
+  .mat-mdc-form-field-subscript-wrapper {
+    font-size: 12px; // Ajusta o tamanho do hint/error
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
